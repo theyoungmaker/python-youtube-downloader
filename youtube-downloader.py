@@ -7,7 +7,7 @@ import os
 
 def download_video():
     url = url_entry.get()
-    save_path = folder_path.get()
+    save_path = folder_entry.get()
     if not is_valid_url(url):
         messagebox.showerror("Error", "Invalid YouTube URL")
         return
