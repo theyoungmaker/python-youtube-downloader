@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from pytube import YouTube
+from check_youtube_url import is_valid_url
 from moviepy.editor import *
 import os
-import re
 
 def download_video():
     url = url_entry.get()
@@ -41,19 +41,9 @@ def download_video():
     except Exception as e:
         messagebox.showerror("Error", f"Failed to download video: {e}")
 
-
 def select_folder():
     folder_selected = filedialog.askdirectory()
     folder_path.set(folder_selected)
-
-def is_valid_url(url):
-    # Basic validation for a YouTube URL
-    youtube_regex = (
-        r'(https?://)?(www\.)?'
-        '(youtube|youtu|youtube-nocookie)\.(com|be)/'
-        '(watch\?v=|embed/|v/|.+\?v=)?([^&=%\?]{11})')
-    youtube_regex_match = re.match(youtube_regex, url)
-    return bool(youtube_regex_match)
 
 # Initialize Tkinter
 root = tk.Tk()
