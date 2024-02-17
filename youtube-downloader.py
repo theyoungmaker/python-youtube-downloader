@@ -18,12 +18,6 @@ def download_video():
     try:
         yt = YouTube(url)
         
-        # Download MP4
-        if mp4_var.get():
-            video_stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
-            if video_stream:
-                video_stream.download(save_path)
-        
         # Download MP3
         if mp3_var.get():
             audio_stream = yt.streams.filter(only_audio=True).first()
@@ -34,8 +28,16 @@ def download_video():
                 # Convert audio to MP3
                 audio_clip = AudioFileClip(out_file)
                 audio_clip.write_audiofile(new_file)
+                audio_clip.close()
                 # Remove the original download if desired
                 os.remove(out_file)
+        
+         # Download MP4
+        if mp4_var.get():
+            video_stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
+            
+            if video_stream:
+                video_stream.download(save_path)
                 
         messagebox.showinfo("Success", "Download completed successfully!")
     except Exception as e:
